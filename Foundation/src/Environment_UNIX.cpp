@@ -40,7 +40,9 @@
 #include <cstring>
 #include <unistd.h>
 #include <stdlib.h>
+#if !defined(POCO_OS_NACL)
 #include <sys/utsname.h>
+#endif
 #include <sys/param.h>
 #include <cstring>
 #if defined(POCO_OS_FAMILY_BSD)
@@ -96,9 +98,13 @@ void EnvironmentImpl::setImpl(const std::string& name, const std::string& value)
 
 std::string EnvironmentImpl::osNameImpl()
 {
+#if defined(POCO_OS_NACL)
+	return "Google Native Client";
+#else
 	struct utsname uts;
 	uname(&uts);
 	return uts.sysname;
+#endif
 }
 
 
@@ -110,25 +116,37 @@ std::string EnvironmentImpl::osDisplayNameImpl()
 
 std::string EnvironmentImpl::osVersionImpl()
 {
+#if defined(POCO_OS_NACL)
+	return "Pepper-19";
+#else
 	struct utsname uts;
 	uname(&uts);
 	return uts.release;
+#endif
 }
 
 
 std::string EnvironmentImpl::osArchitectureImpl()
 {
+#if defined(POCO_OS_NACL)
+	return "Chrome";
+#else
 	struct utsname uts;
 	uname(&uts);
 	return uts.machine;
+#endif
 }
 
 
 std::string EnvironmentImpl::nodeNameImpl()
 {
+#if defined(POCO_OS_NACL)
+	return "";
+#else
 	struct utsname uts;
 	uname(&uts);
 	return uts.nodename;
+#endif
 }
 
 
@@ -272,6 +290,25 @@ void EnvironmentImpl::nodeIdImpl(NodeId& id)
 	}
 	close(sock);
 	delete [] buf;
+}
+
+
+} // namespace Poco
+
+
+#elif defined(POCO_OS_NACL)
+//
+// Google Native Client
+//
+#include <unistd.h>
+
+
+namespace Poco {
+
+
+void EnvironmentImpl::nodeIdImpl(NodeId& id)
+{
+	std::memset(&id, 0, sizeof(id));
 }
 
 

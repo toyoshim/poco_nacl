@@ -43,7 +43,7 @@
 #else
 #include "RWLock_WIN32.cpp"
 #endif
-#elif defined(POCO_ANDROID)
+#elif defined(POCO_ANDROID) || defined(POCO_OS_NACL)
 #include "RWLock_Android.cpp"
 #elif defined(POCO_VXWORKS)
 #include "RWLock_VX.cpp"

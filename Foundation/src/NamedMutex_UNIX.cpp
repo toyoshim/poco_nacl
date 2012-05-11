@@ -44,8 +44,10 @@
 #else
 #include <unistd.h>
 #include <sys/types.h>
+#if !defined(POCO_OS_NACL)
 #include <sys/ipc.h>
 #include <sys/sem.h>
+#endif
 #endif
 
 
@@ -74,7 +76,9 @@ NamedMutexImpl::NamedMutexImpl(const std::string& name):
 	_name(name)
 {
 	std::string fileName = getFileName();
-#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(POCO_OS_NACL)
+	throw SystemException("cannot create named mutex (not supported)", _name);
+#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	_sem = sem_open(fileName.c_str(), O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO, 1);
 	if ((long) _sem == (long) SEM_FAILED) 
 		throw SystemException("cannot create named mutex (sem_open() failed)", _name);
@@ -113,7 +117,9 @@ NamedMutexImpl::~NamedMutexImpl()
 
 void NamedMutexImpl::lockImpl()
 {
-#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(POCO_OS_NACL)
+	throw SystemException("cannot lock named mutex (not supported)", _name);
+#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	int err;
 	do
 	{
@@ -139,7 +145,9 @@ void NamedMutexImpl::lockImpl()
 
 bool NamedMutexImpl::tryLockImpl()
 {
-#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(POCO_OS_NACL)
+	throw SystemException("cannot tryLock named mutex (not supported)", _name);
+#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	return sem_trywait(_sem) == 0;
 #else
 	struct sembuf op;
@@ -153,9 +161,11 @@ bool NamedMutexImpl::tryLockImpl()
 
 void NamedMutexImpl::unlockImpl()
 {
-#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(POCO_OS_NACL)
+	throw SystemException("cannot unlock named mutex (not supported)", _name);
+#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	if (sem_post(_sem) != 0)
-	   	throw SystemException("cannot unlock named mutex", _name);
+		throw SystemException("cannot unlock named mutex", _name);
 #else
 	struct sembuf op;
 	op.sem_num = 0;

@@ -116,7 +116,9 @@ MutexImpl::~MutexImpl()
 
 bool MutexImpl::tryLockImpl(long milliseconds)
 {
-#if defined(POCO_HAVE_MUTEX_TIMEOUT)
+#if defined(POCO_OS_NACL)
+	throw SystemException("cannot lock mutex (not supported)");
+#elif defined(POCO_HAVE_MUTEX_TIMEOUT)
 	struct timespec abstime;
 	struct timeval tv;
 	gettimeofday(&tv, NULL);

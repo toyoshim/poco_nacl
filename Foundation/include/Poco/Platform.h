@@ -59,6 +59,7 @@
 #define POCO_OS_QNX           0x000b
 #define POCO_OS_VXWORKS       0x000c
 #define POCO_OS_CYGWIN        0x000d
+#define POCO_OS_NACL          0x000e
 #define POCO_OS_UNKNOWN_UNIX  0x00ff
 #define POCO_OS_WINDOWS_NT    0x1001
 #define POCO_OS_WINDOWS_CE    0x1011
@@ -118,10 +119,14 @@
 	#define POCO_OS_FAMILY_VMS 1
 	#define POCO_OS POCO_OS_VMS
 #elif defined(POCO_VXWORKS)
-  #define POCO_OS_FAMILY_UNIX 1
-  #define POCO_OS POCO_OS_VXWORKS
+	#define POCO_OS_FAMILY_UNIX 1
+	#define POCO_OS POCO_OS_VXWORKS
 #endif
 
+#if defined(__native_client__)
+	#undef POCO_OS
+	#define POCO_OS POCO_OS_NACL
+#endif
 
 //
 // Hardware Architecture and Byte Order

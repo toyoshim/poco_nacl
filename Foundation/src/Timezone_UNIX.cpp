@@ -58,7 +58,7 @@ public:
 		gmtime_r(&now, &t);
 		std::time_t utc = std::mktime(&t);
 		return now - utc;
-	#elif defined(__CYGWIN__)
+	#elif defined(__CYGWIN__) || defined(POCO_OS_NACL)
 		return -_timezone;
 	#else
 		return -timezone;
