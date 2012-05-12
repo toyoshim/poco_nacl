@@ -1,9 +1,9 @@
 #
 # $Id$
 #
-# Google Native Client x86 32-bit
+# Google Native Client x86 64-bit
 #
-# Make settings for Google Native Client x86 32-bit/Pepper-19
+# Make settings for Google Native Client x86 64-bit/Pepper-19
 #
 #
 
@@ -12,7 +12,7 @@
 #
 LINKMODE           ?= STATIC
 POCO_TARGET_OSNAME = NaCl
-POCO_TARGET_OSARCH = i386
+POCO_TARGET_OSARCH = x86_64
 
 #
 # Define Tools
@@ -70,4 +70,4 @@ SYSFLAGS = -D_XOPEN_SOURCE=500 -D_REENTRANT -D_THREAD_SAFE -D_FILE_OFFSET_BITS=6
 #
 # System Specific Libraries
 #
-SYSLIBS  = -lpthread
+SYSLIBS  = -lpthread -ldl -lrt
