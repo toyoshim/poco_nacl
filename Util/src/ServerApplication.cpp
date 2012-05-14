@@ -684,8 +684,8 @@ void ServerApplication::beDaemon()
 	else if (pid != 0)
 		exit(0);
 	
-	setsid();
 #if !defined(POCO_OS_NACL)
+	setsid();
 	umask(0);
 #endif
 	

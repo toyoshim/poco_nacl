@@ -376,11 +376,13 @@ void FileImpl::copyToImpl(const std::string& path) const
 		throw;
 	}
 	close(sd);
+#if !defined(POCO_OS_NACL)
 	if (fsync(dd) != 0) 
 	{
 		close(dd);
 		handleLastErrorImpl(path);
 	}
+#endif
 	if (close(dd) != 0)
 		handleLastErrorImpl(path);
 }
