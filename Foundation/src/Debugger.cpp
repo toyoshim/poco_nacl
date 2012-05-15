@@ -139,7 +139,7 @@ void Debugger::enter()
 	{
 		// not supported
 	}
-	#elif defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_OS_NACL)
+	#elif defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_NACL)
 	if (isAvailable())
 	{
 		kill(getpid(), SIGINT);
