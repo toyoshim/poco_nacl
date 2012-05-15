@@ -44,7 +44,7 @@
 #include "FPEnvironment_DEC.cpp"
 #elif defined(sun) || defined(__sun)
 #include "FPEnvironment_SUN.cpp"
-#elif defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_OS_NACL)
+#elif defined(POCO_OS_FAMILY_UNIX)
 #include "FPEnvironment_C99.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #include "FPEnvironment_WIN32.cpp"
