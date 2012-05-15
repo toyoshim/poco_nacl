@@ -103,6 +103,9 @@
 #elif defined(__QNX__)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS POCO_OS_QNX
+#elif defined(__native_client__)
+	#define POCO_OS_FAMILY_UNIX 1
+	#define POCO_OS POCO_OS_NACL
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS POCO_OS_UNKNOWN_UNIX
@@ -121,11 +124,6 @@
 #elif defined(POCO_VXWORKS)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS POCO_OS_VXWORKS
-#endif
-
-#if defined(__native_client__)
-	#undef POCO_OS
-	#define POCO_OS POCO_OS_NACL
 #endif
 
 //
