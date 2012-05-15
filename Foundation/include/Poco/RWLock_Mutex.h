@@ -1,5 +1,5 @@
 //
-// RWLock_Android.h
+// RWLock_Mutex.h
 //
 // $Id: //poco/1.4/Foundation/include/Poco/RWLock_Android.h#1 $
 //
@@ -7,7 +7,7 @@
 // Package: Threading
 // Module:  RWLock
 //
-// Definition of the RWLockImpl class for Android Threads.
+// Definition of the RWLockImpl class for Android / Google Chrome Threads.
 //
 // Copyright (c) 2004-2011, Applied Informatics Software Engineering GmbH.
 // and Contributors.
@@ -36,8 +36,8 @@
 //
 
 
-#ifndef Foundation_RWLock_Android_INCLUDED
-#define Foundation_RWLock_Android_INCLUDED
+#ifndef Foundation_RWLock_Mutex_INCLUDED
+#define Foundation_RWLock_Mutex_INCLUDED
 
 
 #include "Poco/Foundation.h"
@@ -116,4 +116,4 @@ inline void RWLockImpl::unlockImpl()
 } // namespace Poco
 
 
-#endif // Foundation_RWLock_Android_INCLUDED
+#endif // Foundation_RWLock_Mutex_INCLUDED

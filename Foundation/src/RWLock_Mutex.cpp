@@ -1,5 +1,5 @@
 //
-// RWLock_Android.cpp
+// RWLock_MMutex.cpp
 //
 // $Id: //poco/1.4/Foundation/src/RWLock_Android.cpp#1 $
 //
@@ -34,7 +34,7 @@
 //
 
 
-#include "Poco/RWLock_Android.h"
+#include "Poco/RWLock_Mutex.h"
 
 
 namespace Poco {

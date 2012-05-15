@@ -25,6 +25,8 @@ build/config/Linux
 build/config/Linux-stlport
 build/config/MinGW
 build/config/MinGW-CrossEnv
+build/config/NaCl32
+build/config/NaCl64
 build/config/NIOS2-Linux
 build/config/OSF1
 build/config/PPC-Linux
@@ -422,7 +424,7 @@ Foundation/include/Poco/RotateStrategy.h
 Foundation/include/Poco/Runnable.h
 Foundation/include/Poco/RunnableAdapter.h
 Foundation/include/Poco/RWLock.h
-Foundation/include/Poco/RWLock_Android.h
+Foundation/include/Poco/RWLock_Mutex.h
 Foundation/include/Poco/RWLock_POSIX.h
 Foundation/include/Poco/RWLock_VX.h
 Foundation/include/Poco/RWLock_WIN32.h
