@@ -7,7 +7,7 @@
 // Package: Core
 // Module:  Debugger
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -135,11 +135,11 @@ void Debugger::enter()
 	{
 		DebugBreak();
 	}
-	#elif defined(POCO_VXWORKS)
+	#elif defined(POCO_VXWORKS) || defined(POCO_NACL)
 	{
 		// not supported
 	}
-	#elif defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_NACL)
+	#elif defined(POCO_OS_FAMILY_UNIX)
 	if (isAvailable())
 	{
 		kill(getpid(), SIGINT);

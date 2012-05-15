@@ -7,7 +7,7 @@
 // Package: Core
 // Module:  Environment
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -44,6 +44,8 @@
 #include "Environment_VMS.cpp"
 #elif defined(POCO_VXWORKS)
 #include "Environment_VX.cpp"
+#elif defined(POCO_NACL)
+#include "Environment_NaCl.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Environment_UNIX.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS) && defined(POCO_WIN32_UTF8)

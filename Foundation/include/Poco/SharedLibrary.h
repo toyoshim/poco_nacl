@@ -9,7 +9,7 @@
 //
 // Definition of the SharedLibrary class.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -47,7 +47,7 @@
 #include "Poco/SharedLibrary_HPUX.h"
 #elif defined(POCO_VXWORKS)
 #include "Poco/SharedLibrary_VX.h"
-#elif defined(POCO_OS_NACL)
+#elif defined(POCO_NACL)
 #include "Poco/SharedLibrary_NaCl.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Poco/SharedLibrary_UNIX.h"

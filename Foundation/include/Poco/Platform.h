@@ -12,7 +12,7 @@
 // NOTE: This file may be included from both C++ and C code, so it
 //       must not contain any C++ specific things.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
