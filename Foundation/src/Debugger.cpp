@@ -78,7 +78,7 @@ bool Debugger::isAvailable()
 		#else
 			return IsDebuggerPresent() ? true : false;
 		#endif
-	#elif defined(POCO_VXWORKS)
+	#elif defined(POCO_VXWORKS) || defined(POCO_NACL)
 		return false;
 	#elif defined(POCO_OS_FAMILY_UNIX)
 		return std::getenv("POCO_ENABLE_DEBUGGER") ? true : false;
