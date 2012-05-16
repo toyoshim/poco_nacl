@@ -590,7 +590,7 @@ void ServerApplication::defineOptions(OptionSet& options)
 //
 void ServerApplication::waitForTerminationRequest()
 {
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	sigset_t sset;
 	sigemptyset(&sset);
 	if (!std::getenv("POCO_ENABLE_DEBUGGER"))
@@ -684,7 +684,7 @@ void ServerApplication::beDaemon()
 	else if (pid != 0)
 		exit(0);
 	
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	setsid();
 	umask(0);
 #endif

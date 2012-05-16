@@ -39,7 +39,7 @@
 #include "Poco/Platform.h"
 
 
-#if !defined(POCO_VXWORKS) && !defined(POCO_OS_NACL)
+#if !defined(POCO_VXWORKS) && !defined(POCO_NACL)
 #include <memory.h>
 #endif
 #include <string.h>
