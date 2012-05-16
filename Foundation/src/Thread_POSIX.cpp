@@ -7,7 +7,7 @@
 // Package: Threading
 // Module:  Thread
 //
-// Copyright (c) 2004-2007, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -53,7 +53,7 @@
 //
 // Block SIGPIPE in main thread.
 //
-#if defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_VXWORKS) && !defined(POCO_OS_NACL)
+#if defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_VXWORKS)
 namespace
 {
 	class SignalBlocker
@@ -63,8 +63,10 @@ namespace
 		{
 			sigset_t sset;
 			sigemptyset(&sset);
-			sigaddset(&sset, SIGPIPE); 
+			sigaddset(&sset, SIGPIPE);
+#if !defined(POCO_NACL)
 			pthread_sigmask(SIG_BLOCK, &sset, 0);
+#endif
 		}
 		~SignalBlocker()
 		{
@@ -97,42 +99,44 @@ ThreadImpl::~ThreadImpl()
 
 void ThreadImpl::setPriorityImpl(int prio)
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("cannot set thread priority");
-#else
 	if (prio != _pData->prio)
 	{
 		_pData->prio = prio;
 		if (isRunningImpl())
 		{
+#if defined(POCO_NACL)
+			if (pthread_setschedprio(_pData->thread, prio))
+				throw SystemException("cannot set thread priority");
+#else
 			struct sched_param par;
 			par.sched_priority = mapPrio(_pData->prio);
 			if (pthread_setschedparam(_pData->thread, SCHED_OTHER, &par))
 				throw SystemException("cannot set thread priority");
+#endif
 		}
 	}
-#endif
 }
 
 
 void ThreadImpl::setOSPriorityImpl(int prio)
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("cannot set thread priority");
-#else
 	if (prio != _pData->osPrio)
 	{
 		if (_pData->pRunnableTarget || _pData->pCallbackTarget)
 		{
+#if defined(POCO_NACL)
+			if (pthread_setschedprio(_pData->thread, prio))
+				throw SystemException("cannot set thread priority");
+#else
 			struct sched_param par;
 			par.sched_priority = prio;
 			if (pthread_setschedparam(_pData->thread, SCHED_OTHER, &par))
 				throw SystemException("cannot set thread priority");
+#endif
 		}
 		_pData->prio   = reverseMapPrio(prio);
 		_pData->osPrio = prio;
 	}
-#endif
 }
 
 
@@ -142,8 +146,6 @@ int ThreadImpl::getMinOSPriorityImpl()
 	return POCO_THREAD_PRIORITY_MIN;
 #elif defined(__VMS) || defined(__digital__)
 	return PRI_OTHER_MIN;
-#elif defined(POCO_OS_NACL)
-        return 0;
 #else
 	return sched_get_priority_min(SCHED_OTHER);
 #endif
@@ -156,8 +158,6 @@ int ThreadImpl::getMaxOSPriorityImpl()
 	return POCO_THREAD_PRIORITY_MAX;
 #elif defined(__VMS) || defined(__digital__)
 	return PRI_OTHER_MAX;
-#elif defined(POCO_OS_NACL)
-        return 0;
 #else
 	return sched_get_priority_max(SCHED_OTHER);
 #endif
@@ -207,15 +207,18 @@ void ThreadImpl::startImpl(Runnable& target)
 		throw SystemException("cannot start thread");
 	}
 
-#if !defined(POCO_OS_NACL)
 	if (_pData->prio != PRIO_NORMAL_IMPL)
 	{
+#if defined(POCO_NACL)
+		if (pthread_setschedprio(_pData->thread, _pData->prio))
+			throw SystemException("cannot set thread priority");
+#else
 		struct sched_param par;
 		par.sched_priority = mapPrio(_pData->prio);
 		if (pthread_setschedparam(_pData->thread, SCHED_OTHER, &par))
 			throw SystemException("cannot set thread priority");
-	}
 #endif
+	}
 }
 
 
@@ -246,15 +249,18 @@ void ThreadImpl::startImpl(Callable target, void* pData)
 		throw SystemException("cannot start thread");
 	}
 
-#if !defined(POCO_OS_NACL)
 	if (_pData->prio != PRIO_NORMAL_IMPL)
 	{
+#if defined(POCO_NACL)
+		if (pthread_setschedprio(_pData->thread, _pData->prio))
+			throw SystemException("cannot set thread priority");
+#else
 		struct sched_param par;
 		par.sched_priority = mapPrio(_pData->prio);
 		if (pthread_setschedparam(_pData->thread, SCHED_OTHER, &par))
 			throw SystemException("cannot set thread priority");
-	}
 #endif
+	}
 }
 
 
@@ -352,7 +358,7 @@ void* ThreadImpl::runnableEntry(void* pThread)
 {
 	_currentThreadHolder.set(reinterpret_cast<ThreadImpl*>(pThread));
 
-#if defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_OS_NACL)
+#if defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_NACL)
 	sigset_t sset;
 	sigemptyset(&sset);
 	sigaddset(&sset, SIGQUIT);
@@ -390,7 +396,7 @@ void* ThreadImpl::callableEntry(void* pThread)
 {
 	_currentThreadHolder.set(reinterpret_cast<ThreadImpl*>(pThread));
 
-#if defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_OS_NACL)
+#if defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_NACL)
 	sigset_t sset;
 	sigemptyset(&sset);
 	sigaddset(&sset, SIGQUIT);

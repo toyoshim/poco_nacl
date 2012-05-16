@@ -7,7 +7,7 @@
 // Package: SharedLibrary
 // Module:  SharedLibrary
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -42,7 +42,7 @@
 #include "SharedLibrary_HPUX.cpp"
 #elif defined(POCO_VXWORKS)
 #include "SharedLibrary_VX.cpp"
-#elif defined(POCO_OS_NACL)
+#elif defined(POCO_NACL)
 #include "SharedLibrary_NaCl.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "SharedLibrary_UNIX.cpp"

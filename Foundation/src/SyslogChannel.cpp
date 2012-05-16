@@ -37,7 +37,7 @@
 #include "Poco/SyslogChannel.h"
 #include "Poco/Message.h"
 #include "Poco/StringTokenizer.h"
-#if defined(POCO_OS_NACL)
+#if defined(POCO_NACL)
 #include <stdio.h>
 #else
 #include <syslog.h>
@@ -77,7 +77,7 @@ SyslogChannel::~SyslogChannel()
 
 void SyslogChannel::open()
 {
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	openlog(_name.c_str(), _options, _facility);
 #endif
 	_open = true;
@@ -88,7 +88,7 @@ void SyslogChannel::close()
 {
 	if (_open)
 	{
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 		closelog();
 #endif
 		_open = false;
@@ -99,8 +99,8 @@ void SyslogChannel::close()
 void SyslogChannel::log(const Message& msg)
 {
 	if (!_open) open();
-#if defined(POCO_OS_NACL)
-        fprintf(stderr, "syslog: %s¥n", msg.getText().c_str());
+#if defined(POCO_NACL)
+        fprintf(stderr, "Poco::SyslogChannel > %s¥n", msg.getText().c_str());
 #else
 	syslog(getPrio(msg), "%s", msg.getText().c_str());
 #endif
@@ -266,7 +266,7 @@ int SyslogChannel::getPrio(const Message& msg)
 {
 	switch (msg.getPriority())
 	{
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	case Message::PRIO_TRACE:
 	case Message::PRIO_DEBUG:
 		return LOG_DEBUG;
