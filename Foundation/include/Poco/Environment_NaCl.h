@@ -1,11 +1,15 @@
 //
-// expat_config.h
+// Environment_NaCl.h
 //
-// $Id: //poco/1.4/XML/src/expat_config.h#1 $
+// $Id: //poco/1.4/Foundation/include/Poco/Environment_NaCl.h#2 $
 //
-// Poco XML specific configuration for expat.
+// Library: Foundation
+// Package: Core
+// Module:  Environment
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Definition of the EnvironmentImpl class for Google Native Client.
+//
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -32,30 +36,43 @@
 //
 
 
-#ifndef EXPAT_CONFIG_H
-#define EXPAT_CONFIG_H
+#ifndef Foundation_Environment_NaCl_INCLUDED
+#define Foundation_Environment_NaCl_INCLUDED
 
 
-#include "Poco/Platform.h"
+#include "Poco/Foundation.h"
+#include "Poco/Mutex.h"
+#include <map>
 
 
-#if !defined(POCO_OS_NACL)
-#include <memory.h>
-#endif
-#include <string.h>
+namespace Poco {
 
 
-#define XML_CONTEXT_BYTES 1024
+class Foundation_API EnvironmentImpl
+{
+public:
+	typedef UInt8 NodeId[6];
+
+	static std::string getImpl(const std::string& name);
+	static bool hasImpl(const std::string& name);
+	static void setImpl(const std::string& name, const std::string& value);
+	static std::string osNameImpl();
+	static std::string osDisplayNameImpl();
+	static std::string osVersionImpl();
+	static std::string osArchitectureImpl();
+	static std::string nodeNameImpl();
+	static void nodeIdImpl(NodeId& id);
+	static unsigned processorCountImpl();
+
+private:
+	typedef std::map<std::string, std::string> StringMap;
+	
+	static StringMap _map;
+	static FastMutex _mutex;
+};
 
 
-#if defined POCO_ARCH_LITTLE_ENDIAN
-#define BYTEORDER 1234
-#else
-#define BYTEORDER 4321
-#endif
+} // namespace Poco
 
 
-#define HAVE_MEMMOVE
-
-
-#endif /* EXPAT_CONFIG_H */
+#endif // Foundation_Environment_NaCl_INCLUDED

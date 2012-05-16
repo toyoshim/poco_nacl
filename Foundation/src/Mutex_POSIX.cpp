@@ -7,7 +7,7 @@
 // Package: Threading
 // Module:  Mutex
 //
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -126,10 +126,17 @@ bool MutexImpl::tryLockImpl(long milliseconds)
 			return true;
 		else if (rc != EBUSY)
 			throw SystemException("cannot lock mutex");
+#if defined(POCO_NACL)
+		struct timespec ts;
+		ts.tv_sec  = 0;
+		ts.tv_nsec = sleepMillis * 1000000;
+		nanosleep(&ts, NULL);
+#else
 		struct timeval tv;
 		tv.tv_sec  = 0;
 		tv.tv_usec = sleepMillis * 1000;
 		select(0, NULL, NULL, NULL, &tv); 	
+#endif
 	}
 	while (!now.isElapsed(diff));
 	return false;

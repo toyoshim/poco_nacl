@@ -492,6 +492,7 @@ int ServerApplication::run(int argc, wchar_t** argv)
 //
 void ServerApplication::waitForTerminationRequest()
 {
+#if !defined(POCO_OS_NACL)
 	sigset_t sset;
 	sigemptyset(&sset);
 	if (!std::getenv("POCO_ENABLE_DEBUGGER"))
@@ -503,6 +504,7 @@ void ServerApplication::waitForTerminationRequest()
 	sigprocmask(SIG_BLOCK, &sset, NULL);
 	int sig;
 	sigwait(&sset, &sig);
+#endif
 }
 
 
@@ -551,8 +553,10 @@ void ServerApplication::beDaemon()
 	else if (pid != 0)
 		exit(0);
 	
+#if !defined(POCO_OS_NACL)
 	setsid();
 	umask(0);
+#endif
 	
 	// attach stdin, stdout, stderr to /dev/null
 	// instead of just closing them. This avoids

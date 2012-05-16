@@ -267,6 +267,28 @@ versions, use
    $ @buildvms -release
 
 
+BUILDING for Google Native Client
+=================================
+
+Download the Native Client SDK from the following site and follow the
+instructions to set up.
+> https://developers.google.com/native-client/sdk/download
+
+You may need pepper_19 and sdk_tools bundles. To build, you should make sure
+that your PATH includes newlib version of i686-nacl-gcc. Usually, it is
+installed in $NACL_SDK_ROOT/toolchain/<os>_<arch>_newlib/bin.
+
+Create configurations to build. This depends on supporting architecture. If you
+want to build intel 32-bit version of NativeClient, type
+> $ ./configure --config=NaCl32 --omit=Net
+
+For one of 64-bit version, type
+> $ ./configure --config=NaCl64 --omit=Net
+
+Then, build by make.
+> $ make
+
+
 MORE INFORMATION
 ================
 

@@ -1,11 +1,15 @@
 //
-// expat_config.h
+// NamedMutex_NaCl.h
 //
-// $Id: //poco/1.4/XML/src/expat_config.h#1 $
+// $Id: //poco/1.4/Foundation/include/Poco/NamedMutex_NaCl.h#1 $
 //
-// Poco XML specific configuration for expat.
+// Library: Foundation
+// Package: Processes
+// Module:  NamedMutex
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Definition of the NamedMutexImpl class for Google Native Client.
+//
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -32,30 +36,28 @@
 //
 
 
-#ifndef EXPAT_CONFIG_H
-#define EXPAT_CONFIG_H
+#ifndef Foundation_NamedMutex_NaCl_INCLUDED
+#define Foundation_NamedMutex_NaCl_INCLUDED
 
 
-#include "Poco/Platform.h"
+#include "Poco/Foundation.h"
 
 
-#if !defined(POCO_OS_NACL)
-#include <memory.h>
-#endif
-#include <string.h>
+namespace Poco {
 
 
-#define XML_CONTEXT_BYTES 1024
+class Foundation_API NamedMutexImpl
+{
+protected:
+	NamedMutexImpl(const std::string& name);
+	~NamedMutexImpl();
+	void lockImpl();
+	bool tryLockImpl();
+	void unlockImpl();
+};
 
 
-#if defined POCO_ARCH_LITTLE_ENDIAN
-#define BYTEORDER 1234
-#else
-#define BYTEORDER 4321
-#endif
+} // namespace Poco
 
 
-#define HAVE_MEMMOVE
-
-
-#endif /* EXPAT_CONFIG_H */
+#endif // Foundation_NamedMutex_NaCl_INCLUDED

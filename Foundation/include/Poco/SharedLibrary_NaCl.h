@@ -1,11 +1,15 @@
 //
-// expat_config.h
+// SharedLibrary_NaCl.h
 //
-// $Id: //poco/1.4/XML/src/expat_config.h#1 $
+// $Id$
 //
-// Poco XML specific configuration for expat.
+// Library: Foundation
+// Package: SharedLibrary
+// Module:  SharedLibrary
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Definition of the SharedLibraryImpl class for Google Native Client.
+//
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -32,30 +36,31 @@
 //
 
 
-#ifndef EXPAT_CONFIG_H
-#define EXPAT_CONFIG_H
+#ifndef Foundation_SharedLibrary_NaCl_INCLUDED
+#define Foundation_SharedLibrary_NaCl_INCLUDED
 
 
-#include "Poco/Platform.h"
+#include "Poco/Foundation.h"
 
 
-#if !defined(POCO_OS_NACL)
-#include <memory.h>
-#endif
-#include <string.h>
+namespace Poco {
 
 
-#define XML_CONTEXT_BYTES 1024
+class Foundation_API SharedLibraryImpl
+{
+protected:
+	SharedLibraryImpl();
+	~SharedLibraryImpl();
+	void loadImpl(const std::string& path);
+	void unloadImpl();
+	bool isLoadedImpl() const;
+	void* findSymbolImpl(const std::string& name);
+	const std::string& getPathImpl() const;
+	static std::string suffixImpl();
+};
 
 
-#if defined POCO_ARCH_LITTLE_ENDIAN
-#define BYTEORDER 1234
-#else
-#define BYTEORDER 4321
-#endif
+} // namespace Poco
 
 
-#define HAVE_MEMMOVE
-
-
-#endif /* EXPAT_CONFIG_H */
+#endif // Foundation_SharedLibrary_NaCl_INCLUDED

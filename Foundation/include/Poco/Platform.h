@@ -12,7 +12,7 @@
 // NOTE: This file may be included from both C++ and C code, so it
 //       must not contain any C++ specific things.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -59,6 +59,7 @@
 #define POCO_OS_QNX           0x000b
 #define POCO_OS_VXWORKS       0x000c
 #define POCO_OS_CYGWIN        0x000d
+#define POCO_OS_NACL          0x000e
 #define POCO_OS_UNKNOWN_UNIX  0x00ff
 #define POCO_OS_WINDOWS_NT    0x1001
 #define POCO_OS_WINDOWS_CE    0x1011
@@ -102,6 +103,9 @@
 #elif defined(__QNX__)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS POCO_OS_QNX
+#elif defined(__native_client__)
+	#define POCO_OS_FAMILY_UNIX 1
+	#define POCO_OS POCO_OS_NACL
 #elif defined(unix) || defined(__unix) || defined(__unix__)
 	#define POCO_OS_FAMILY_UNIX 1
 	#define POCO_OS POCO_OS_UNKNOWN_UNIX

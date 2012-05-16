@@ -7,7 +7,7 @@
 // Package: Threading
 // Module:  RWLock
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -44,7 +44,11 @@
 #include "RWLock_WIN32.cpp"
 #endif
 #else
+#if defined(POCO_NACL)
+#include "RWLock_Mutex.cpp"
+#else
 #include "RWLock_POSIX.cpp"
+#endif
 #endif
 
 

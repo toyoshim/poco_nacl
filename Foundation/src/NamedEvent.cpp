@@ -7,7 +7,7 @@
 // Package: Processes
 // Module:  NamedEvent
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -41,6 +41,8 @@
 #include "NamedEvent_WIN32U.cpp"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #include "NamedEvent_WIN32.cpp"
+#elif defined(POCO_NACL)
+#include "NamedEvent_NaCl.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "NamedEvent_UNIX.cpp"
 #else

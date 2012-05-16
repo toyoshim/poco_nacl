@@ -7,7 +7,7 @@
 // Package: Core
 // Module:  Debugger
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -78,7 +78,9 @@ bool Debugger::isAvailable()
 		#else
 			return IsDebuggerPresent() ? true : false;
 		#endif
-	#elif defined(POCO_OS_FAMILY_UNIX)
+	#elif defined(POCO_NACL)
+		return false;
+	#elif defined(POCO_OS_FAMILY_UNIX) || !defined(POCO_NACL)
 		return std::getenv("POCO_ENABLE_DEBUGGER") ? true : false;
 	#elif defined(POCO_OS_FAMILY_VMS)
 		return true;
@@ -133,7 +135,7 @@ void Debugger::enter()
 	{
 		DebugBreak();
 	}
-	#elif defined(POCO_OS_FAMILY_UNIX)
+	#elif defined(POCO_OS_FAMILY_UNIX) && !defined(POCO_NACL)
 	if (isAvailable())
 	{
 		kill(getpid(), SIGINT);

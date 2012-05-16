@@ -9,7 +9,7 @@
 //
 // Definition of the RWLock class.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -51,7 +51,11 @@
 #include "Poco/RWLock_WIN32.h"
 #endif
 #else
+#if defined(POCO_NACL)
+#include "Poco/RWLock_Mutex.h"
+#else
 #include "Poco/RWLock_POSIX.h"
+#endif
 #endif
 
 

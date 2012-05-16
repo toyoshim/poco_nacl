@@ -1,11 +1,13 @@
 //
-// expat_config.h
+// RWLock_Mutex.cpp
 //
-// $Id: //poco/1.4/XML/src/expat_config.h#1 $
+// $Id: //poco/1.4/Foundation/src/RWLock_Android.cpp#1 $
 //
-// Poco XML specific configuration for expat.
+// Library: Foundation
+// Package: Threading
+// Module:  RWLock
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -32,30 +34,28 @@
 //
 
 
-#ifndef EXPAT_CONFIG_H
-#define EXPAT_CONFIG_H
+#include "Poco/RWLock_Mutex.h"
 
 
-#include "Poco/Platform.h"
+namespace Poco {
 
 
-#if !defined(POCO_OS_NACL)
-#include <memory.h>
-#endif
-#include <string.h>
+RWLockImpl::RWLockImpl()
+{
+	pthread_mutexattr_t attr;
+	pthread_mutexattr_init(&attr);
+	if (pthread_mutex_init(&_mutex, &attr))
+	{
+		pthread_mutexattr_destroy(&attr);
+		throw SystemException("cannot create mutex");
+	}
+	pthread_mutexattr_destroy(&attr);}
 
 
-#define XML_CONTEXT_BYTES 1024
+RWLockImpl::~RWLockImpl()
+{
+	pthread_mutex_destroy(&_mutex);
+}
 
 
-#if defined POCO_ARCH_LITTLE_ENDIAN
-#define BYTEORDER 1234
-#else
-#define BYTEORDER 4321
-#endif
-
-
-#define HAVE_MEMMOVE
-
-
-#endif /* EXPAT_CONFIG_H */
+} // namespace Poco

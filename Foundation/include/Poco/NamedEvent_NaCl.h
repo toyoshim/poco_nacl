@@ -1,11 +1,15 @@
 //
-// expat_config.h
+// NamedEvent_NaCl.h
 //
-// $Id: //poco/1.4/XML/src/expat_config.h#1 $
+// $Id: //poco/1.4/Foundation/include/Poco/NamedEvent_NaCl.h#1 $
 //
-// Poco XML specific configuration for expat.
+// Library: Foundation
+// Package: Processes
+// Module:  NamedEvent
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Definition of the NamedEventImpl class for Android.
+//
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -32,30 +36,27 @@
 //
 
 
-#ifndef EXPAT_CONFIG_H
-#define EXPAT_CONFIG_H
+#ifndef Foundation_NamedEvent_NaCl_INCLUDED
+#define Foundation_NamedEvent_NaCl_INCLUDED
 
 
-#include "Poco/Platform.h"
+#include "Poco/Foundation.h"
 
 
-#if !defined(POCO_OS_NACL)
-#include <memory.h>
-#endif
-#include <string.h>
+namespace Poco {
 
 
-#define XML_CONTEXT_BYTES 1024
+class Foundation_API NamedEventImpl
+{
+protected:
+	NamedEventImpl(const std::string& name);	
+	~NamedEventImpl();
+	void setImpl();
+	void waitImpl();
+};
 
 
-#if defined POCO_ARCH_LITTLE_ENDIAN
-#define BYTEORDER 1234
-#else
-#define BYTEORDER 4321
-#endif
+} // namespace Poco
 
 
-#define HAVE_MEMMOVE
-
-
-#endif /* EXPAT_CONFIG_H */
+#endif // Foundation_NamedEvent_NaCl_INCLUDED

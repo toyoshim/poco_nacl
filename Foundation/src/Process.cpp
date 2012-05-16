@@ -7,7 +7,7 @@
 // Package: Processes
 // Module:  Process
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -45,6 +45,8 @@
 #endif
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #include "Process_WIN32.cpp"
+#elif defined(POCO_NACL)
+#include "Process_NaCl.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Process_UNIX.cpp"
 #else

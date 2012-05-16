@@ -1,11 +1,15 @@
 //
-// expat_config.h
+// Process_NaCl.h
 //
-// $Id: //poco/1.4/XML/src/expat_config.h#1 $
+// $Id: //poco/1.4/Foundation/include/Poco/Process_NaCl.h#2 $
 //
-// Poco XML specific configuration for expat.
+// Library: Foundation
+// Package: Processes
+// Module:  Process
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Definition of the ProcessImpl class for Google Native Client.
+//
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -32,30 +36,52 @@
 //
 
 
-#ifndef EXPAT_CONFIG_H
-#define EXPAT_CONFIG_H
+#ifndef Foundation_Process_NaCl_INCLUDED
+#define Foundation_Process_NaCl_INCLUDED
 
 
-#include "Poco/Platform.h"
+#include "Poco/Foundation.h"
+#include "Poco/RefCountedObject.h"
+#include <unistd.h>
+#include <vector>
 
 
-#if !defined(POCO_OS_NACL)
-#include <memory.h>
-#endif
-#include <string.h>
+namespace Poco {
 
 
-#define XML_CONTEXT_BYTES 1024
+class Pipe;
 
 
-#if defined POCO_ARCH_LITTLE_ENDIAN
-#define BYTEORDER 1234
-#else
-#define BYTEORDER 4321
-#endif
+class Foundation_API ProcessHandleImpl: public RefCountedObject
+{
+public:
+	ProcessHandleImpl(pid_t pid);
+	~ProcessHandleImpl();
+	
+	pid_t id() const;
+	int wait() const;
+	
+private:
+	pid_t _pid;
+};
 
 
-#define HAVE_MEMMOVE
+class Foundation_API ProcessImpl
+{
+public:
+	typedef pid_t PIDImpl;
+	typedef std::vector<std::string> ArgsImpl;
+	
+	static PIDImpl idImpl();
+	static void timesImpl(long& userTime, long& kernelTime);
+	static ProcessHandleImpl* launchImpl(const std::string& command, const ArgsImpl& args, Pipe* inPipe, Pipe* outPipe, Pipe* errPipe);		
+	static void killImpl(const ProcessHandleImpl& handle);
+	static void killImpl(PIDImpl pid);
+	static void requestTerminationImpl(PIDImpl pid);
+};
 
 
-#endif /* EXPAT_CONFIG_H */
+} // namespace Poco
+
+
+#endif // Foundation_Process_NaCl_INCLUDED

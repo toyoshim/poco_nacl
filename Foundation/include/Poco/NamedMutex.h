@@ -9,7 +9,7 @@
 //
 // Definition of the NamedMutex class.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -48,6 +48,8 @@
 #include "Poco/NamedMutex_WIN32U.h"
 #elif defined(POCO_OS_FAMILY_WINDOWS)
 #include "Poco/NamedMutex_WIN32.h"
+#elif defined(POCO_NACL)
+#include "Poco/NamedMutex_NaCl.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Poco/NamedMutex_UNIX.h"
 #else
