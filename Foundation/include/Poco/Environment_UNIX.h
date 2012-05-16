@@ -1,4 +1,4 @@
-//
+
 // Environment_UNIX.h
 //
 // $Id: //poco/1.4/Foundation/include/Poco/Environment_UNIX.h#2 $

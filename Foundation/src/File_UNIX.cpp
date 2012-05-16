@@ -184,7 +184,7 @@ bool FileImpl::isLinkImpl() const
 {
 	poco_assert (!_path.empty());
 
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	struct stat st;
 	if (lstat(_path.c_str(), &st) == 0)
 		return S_ISLNK(st.st_mode);
@@ -258,7 +258,7 @@ void FileImpl::setLastModifiedImpl(const Timestamp& ts)
 {
 	poco_assert (!_path.empty());
 
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	struct utimbuf tb;
 	tb.actime  = ts.epochTime();
 	tb.modtime = ts.epochTime();
@@ -285,7 +285,7 @@ void FileImpl::setSizeImpl(FileSizeImpl size)
 {
 	poco_assert (!_path.empty());
 
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL_NEWLIB)
 	if (truncate(_path.c_str(), size) != 0)
 		handleLastErrorImpl(_path);
 #endif
@@ -376,7 +376,7 @@ void FileImpl::copyToImpl(const std::string& path) const
 		throw;
 	}
 	close(sd);
-#if !defined(POCO_OS_NACL)
+#if !defined(POCO_NACL)
 	if (fsync(dd) != 0) 
 	{
 		close(dd);
