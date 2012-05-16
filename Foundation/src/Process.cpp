@@ -48,7 +48,7 @@
 #elif defined(POCO_VXWORKS)
 #include "Process_VX.cpp"
 #elif defined(POCO_NACL)
-#include "Process_NACL.cpp"
+#include "Process_NaCl.cpp"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Process_UNIX.cpp"
 #else
