@@ -9,7 +9,7 @@
 //
 // Definition of the Process class.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -53,6 +53,8 @@
 #include "Poco/Process_WIN32.h"
 #elif defined(POCO_VXWORKS)
 #include "Poco/Process_VX.h"
+#elif defined(POCO_NACL)
+#include "Poco/Process_NaCl.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Poco/Process_UNIX.h"
 #else

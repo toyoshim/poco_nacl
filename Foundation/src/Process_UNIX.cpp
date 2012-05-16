@@ -102,24 +102,16 @@ ProcessImpl::PIDImpl ProcessImpl::idImpl()
 
 void ProcessImpl::timesImpl(long& userTime, long& kernelTime)
 {
-#if defined(POCO_OS_NACL)
-	userTime = 0;
-	kernelTime = 0;
-#else
 	struct rusage usage;
 	getrusage(RUSAGE_SELF, &usage);
 	userTime   = usage.ru_utime.tv_sec;
 	kernelTime = usage.ru_stime.tv_sec;
-#endif
 }
 
 
 ProcessHandleImpl* ProcessImpl::launchImpl(const std::string& command, const ArgsImpl& args, Pipe* inPipe, Pipe* outPipe, Pipe* errPipe)
 {
-#if defined(POCO_OS_NACL)
-	int pid;
-	throw SystemException("NaCl doesn't allow launching another process", command);
-#elif defined(__QNX__)
+#if defined(__QNX__)
 	/// use QNX's spawn system call which is more efficient than fork/exec.
 	char** argv = new char*[args.size() + 2];
 	int i = 0;
@@ -185,9 +177,6 @@ void ProcessImpl::killImpl(const ProcessHandleImpl& handle)
 
 void ProcessImpl::killImpl(PIDImpl pid)
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("NaCl doesn't allow killing another process");
-#else
 	if (kill(pid, SIGKILL) != 0)
 	{
 		switch (errno)
@@ -200,15 +189,11 @@ void ProcessImpl::killImpl(PIDImpl pid)
 			throw SystemException("cannot kill process");
 		}
 	}
-#endif
 }
 
 
 void ProcessImpl::requestTerminationImpl(PIDImpl pid)
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("NaCl doesn't allow terminating another process");
-#else
 	if (kill(pid, SIGINT) != 0)
 	{
 		switch (errno)
@@ -221,7 +206,6 @@ void ProcessImpl::requestTerminationImpl(PIDImpl pid)
 			throw SystemException("cannot terminate process");
 		}
 	}
-#endif
 }
 
 

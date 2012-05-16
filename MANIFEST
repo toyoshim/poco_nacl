@@ -412,6 +412,7 @@ Foundation/include/Poco/PriorityExpire.h
 Foundation/include/Poco/PriorityNotificationQueue.h
 Foundation/include/Poco/PriorityStrategy.h
 Foundation/include/Poco/Process.h
+Foundation/include/Poco/Process_NaCl.h
 Foundation/include/Poco/Process_UNIX.h
 Foundation/include/Poco/Process_VMS.h
 Foundation/include/Poco/Process_VX.h
@@ -1027,6 +1028,7 @@ Foundation/src/pocomsg.mc
 Foundation/src/pocomsg.rc
 Foundation/src/PriorityNotificationQueue.cpp
 Foundation/src/Process.cpp
+Foundation/src/Process_NaCl.cpp
 Foundation/src/Process_UNIX.cpp
 Foundation/src/Process_VMS.cpp
 Foundation/src/Process_VX.cpp
