@@ -368,6 +368,7 @@ Foundation/include/Poco/NamedEvent_WIN32.h
 Foundation/include/Poco/NamedEvent_WIN32U.h
 Foundation/include/Poco/NamedMutex.h
 Foundation/include/Poco/NamedMutex_Android.h
+Foundation/include/Poco/NamedMutex_NaCl.h
 Foundation/include/Poco/NamedMutex_UNIX.h
 Foundation/include/Poco/NamedMutex_VMS.h
 Foundation/include/Poco/NamedMutex_WIN32.h
@@ -440,6 +441,7 @@ Foundation/include/Poco/Semaphore_WIN32.h
 Foundation/include/Poco/SHA1Engine.h
 Foundation/include/Poco/SharedLibrary.h
 Foundation/include/Poco/SharedLibrary_HPUX.h
+Foundation/include/Poco/SharedLibrary_NaCl.h
 Foundation/include/Poco/SharedLibrary_UNIX.h
 Foundation/include/Poco/SharedLibrary_VMS.h
 Foundation/include/Poco/SharedLibrary_VX.h
@@ -969,12 +971,14 @@ Foundation/src/Mutex_WIN32.cpp
 Foundation/src/Mutex_WINCE.cpp
 Foundation/src/NamedEvent.cpp
 Foundation/src/NamedEvent_Android.cpp
+Foundation/src/NamedEvent_NaCl.cpp
 Foundation/src/NamedEvent_UNIX.cpp
 Foundation/src/NamedEvent_VMS.cpp
 Foundation/src/NamedEvent_WIN32.cpp
 Foundation/src/NamedEvent_WIN32U.cpp
 Foundation/src/NamedMutex.cpp
 Foundation/src/NamedMutex_Android.cpp
+Foundation/src/NamedMutex_NaCl.cpp
 Foundation/src/NamedMutex_UNIX.cpp
 Foundation/src/NamedMutex_VMS.cpp
 Foundation/src/NamedMutex_WIN32.cpp
@@ -1049,6 +1053,7 @@ Foundation/src/Semaphore_WIN32.cpp
 Foundation/src/SHA1Engine.cpp
 Foundation/src/SharedLibrary.cpp
 Foundation/src/SharedLibrary_HPUX.cpp
+Foundation/src/SharedLibrary_NaCl.cpp
 Foundation/src/SharedLibrary_UNIX.cpp
 Foundation/src/SharedLibrary_VMS.cpp
 Foundation/src/SharedLibrary_VX.cpp
