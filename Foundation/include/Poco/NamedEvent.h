@@ -9,7 +9,7 @@
 //
 // Definition of the NamedEvent class.
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -49,6 +49,8 @@
 #include "Poco/NamedEvent_WIN32.h"
 #elif defined(POCO_ANDROID)
 #include "Poco/NamedEvent_Android.h"
+#elif defined(POCO_NACL)
+#include "Poco/NamedEvent_NaCl.h"
 #elif defined(POCO_OS_FAMILY_UNIX)
 #include "Poco/NamedEvent_UNIX.h"
 #else

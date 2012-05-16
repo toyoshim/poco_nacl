@@ -1,13 +1,13 @@
 //
-// NamedEvent.cpp
+// NamedEvent_NaCl.cpp
 //
-// $Id: //poco/1.4/Foundation/src/NamedEvent.cpp#2 $
+// $Id: //poco/1.4/Foundation/src/NamedEvent_NaCl.cpp#1 $
 //
 // Library: Foundation
 // Package: Processes
 // Module:  NamedEvent
 //
-// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -34,35 +34,32 @@
 //
 
 
-#include "Poco/NamedEvent.h"
-
-
-#if defined(POCO_OS_FAMILY_WINDOWS) && defined(POCO_WIN32_UTF8)
-#include "NamedEvent_WIN32U.cpp"
-#elif defined(POCO_OS_FAMILY_WINDOWS)
-#include "NamedEvent_WIN32.cpp"
-#elif defined(POCO_ANDROID)
-#include "NamedEvent_Android.cpp"
-#elif defined(POCO_NACL)
-#include "NamedEvent_NaCl.cpp"
-#elif defined(POCO_OS_FAMILY_UNIX)
-#include "NamedEvent_UNIX.cpp"
-#else
-#include "NamedEvent_VMS.cpp"
-#endif
+#include "Poco/NamedEvent_NaCl.h"
+#include "Poco/Exception.h"
 
 
 namespace Poco {
 
 
-NamedEvent::NamedEvent(const std::string& name):
-	NamedEventImpl(name)
+NamedEventImpl::NamedEventImpl(const std::string&)
 {
 }
 
 
-NamedEvent::~NamedEvent()
+NamedEventImpl::~NamedEventImpl()
 {
+}
+
+
+void NamedEventImpl::setImpl()
+{
+	throw NotImplementedException("NamedEvent::set() not available on Google Native Client");
+}
+
+
+void NamedEventImpl::waitImpl()
+{
+	throw NotImplementedException("NamedEvent::wait() not available on Google Native Client");
 }
 
 
