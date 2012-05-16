@@ -44,10 +44,8 @@
 #else
 #include <unistd.h>
 #include <sys/types.h>
-#if !defined(POCO_OS_NACL)
 #include <sys/ipc.h>
 #include <sys/sem.h>
-#endif
 #endif
 
 
@@ -76,9 +74,7 @@ NamedEventImpl::NamedEventImpl(const std::string& name):
 	_name(name)
 {
 	std::string fileName = getFileName();
-#if defined(POCO_OS_NACL)
-	throw SystemException("cannot create named event (not supported)", _name);
-#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	_sem = sem_open(fileName.c_str(), O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO, 0);
 	if ((long) _sem == (long) SEM_FAILED) 
 		throw SystemException("cannot create named event (sem_open() failed)", _name);
@@ -117,27 +113,23 @@ NamedEventImpl::~NamedEventImpl()
 
 void NamedEventImpl::setImpl()
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("cannot set named event (not supported)", _name);
-#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	if (sem_post(_sem) != 0)
-		throw SystemException("cannot set named event", _name);
+	   	throw SystemException("cannot set named event", _name);
 #else
 	struct sembuf op;
 	op.sem_num = 0;
 	op.sem_op  = 1;
 	op.sem_flg = 0;
 	if (semop(_semid, &op, 1) != 0)
-		throw SystemException("cannot set named event", _name);
+	   	throw SystemException("cannot set named event", _name);
 #endif
 }
 
 
 void NamedEventImpl::waitImpl()
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("cannot wait for named event (not ported)", _name);
-#elif defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
+#if defined(sun) || defined(__APPLE__) || defined(__osf__) || defined(__QNX__) || defined(_AIX)
 	int err;
 	do
 	{

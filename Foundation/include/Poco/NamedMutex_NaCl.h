@@ -1,13 +1,15 @@
 //
-// NamedMutex.cpp
+// NamedMutex_NaCl.h
 //
-// $Id: //poco/1.4/Foundation/src/NamedMutex.cpp#2 $
+// $Id: //poco/1.4/Foundation/include/Poco/NamedMutex_NaCl.h#1 $
 //
 // Library: Foundation
 // Package: Processes
 // Module:  NamedMutex
 //
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
+// Definition of the NamedMutexImpl class for Google Native Client.
+//
+// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -34,36 +36,28 @@
 //
 
 
-#include "Poco/NamedMutex.h"
+#ifndef Foundation_NamedMutex_NaCl_INCLUDED
+#define Foundation_NamedMutex_NaCl_INCLUDED
 
 
-#if defined(POCO_OS_FAMILY_WINDOWS) && defined(POCO_WIN32_UTF8)
-#include "NamedMutex_WIN32U.cpp"
-#elif defined(POCO_OS_FAMILY_WINDOWS)
-#include "NamedMutex_WIN32.cpp"
-#elif defined(POCO_ANDROID)
-#include "NamedMutex_Android.cpp"
-#elif defined(POCO_NACL)
-#include "NamedMutex_NaCl.cpp"
-#elif defined(POCO_OS_FAMILY_UNIX)
-#include "NamedMutex_UNIX.cpp"
-#else
-#include "NamedMutex_VMS.cpp"
-#endif
+#include "Poco/Foundation.h"
 
 
 namespace Poco {
 
 
-NamedMutex::NamedMutex(const std::string& name):
-	NamedMutexImpl(name)
+class Foundation_API NamedMutexImpl
 {
-}
-
-
-NamedMutex::~NamedMutex()
-{
-}
+protected:
+	NamedMutexImpl(const std::string& name);
+	~NamedMutexImpl();
+	void lockImpl();
+	bool tryLockImpl();
+	void unlockImpl();
+};
 
 
 } // namespace Poco
+
+
+#endif // Foundation_NamedMutex_NaCl_INCLUDED

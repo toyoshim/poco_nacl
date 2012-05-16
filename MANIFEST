@@ -271,6 +271,7 @@ Foundation/include/Poco/DynamicAny.h
 Foundation/include/Poco/DynamicAnyHolder.h
 Foundation/include/Poco/DynamicFactory.h
 Foundation/include/Poco/Environment.h
+Foundation/include/Poco/Environment_NaCl.h
 Foundation/include/Poco/Environment_UNIX.h
 Foundation/include/Poco/Environment_VMS.h
 Foundation/include/Poco/Environment_VX.h
@@ -360,6 +361,7 @@ Foundation/include/Poco/Mutex_WIN32.h
 Foundation/include/Poco/Mutex_WINCE.h
 Foundation/include/Poco/NamedEvent.h
 Foundation/include/Poco/NamedEvent_Android.h
+Foundation/include/Poco/NamedEvent_NaCl.h
 Foundation/include/Poco/NamedEvent_UNIX.h
 Foundation/include/Poco/NamedEvent_VMS.h
 Foundation/include/Poco/NamedEvent_WIN32.h
