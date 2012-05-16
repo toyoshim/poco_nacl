@@ -7,7 +7,7 @@
 // Package: Threading
 // Module:  Mutex
 //
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2004-2012, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -116,9 +116,7 @@ MutexImpl::~MutexImpl()
 
 bool MutexImpl::tryLockImpl(long milliseconds)
 {
-#if defined(POCO_OS_NACL)
-	throw SystemException("cannot lock mutex (not supported)");
-#elif defined(POCO_HAVE_MUTEX_TIMEOUT)
+#if defined(POCO_HAVE_MUTEX_TIMEOUT)
 	struct timespec abstime;
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
@@ -147,12 +145,11 @@ bool MutexImpl::tryLockImpl(long milliseconds)
 			return true;
 		else if (rc != EBUSY)
 			throw SystemException("cannot lock mutex");
-#if defined(POCO_VXWORKS)
+#if defined(POCO_VXWORKS) || defined(POCO_NACL)
 		struct timespec ts;
 		ts.tv_sec = 0;
 		ts.tv_nsec = sleepMillis*1000000;
 		nanosleep(&ts, NULL);
-		
 #else
 		struct timeval tv;
 		tv.tv_sec  = 0;
