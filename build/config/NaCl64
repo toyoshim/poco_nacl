@@ -40,10 +40,10 @@ SHAREDLIBLINKEXT = .so
 #
 # Compiler and Linker Flags
 #
-CFLAGS          =
+CFLAGS          = -m64
 CFLAGS32        =
 CFLAGS64        =
-CXXFLAGS        = -Wall -Wno-sign-compare
+CXXFLAGS        = -m64 -Wall -Wno-sign-compare
 CXXFLAGS32      =
 CXXFLAGS64      =
 LINKFLAGS       =
